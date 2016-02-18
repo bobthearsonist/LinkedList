@@ -16,12 +16,20 @@ template<typename T>
 class List {
 public:
 	List<T>();
+	List<T>(Node<T>);
+	List<T>(List<T>);
 	~List();
 
-	Node* head;
-	Node* tail;
+	Node<T>* head;
+
+	bool empty(void) const;
+	const T& peek() const;
+
+	void insert(T item);
+	void remove(void);
 
 private:
+	unsigned int count;
 
 };
 
