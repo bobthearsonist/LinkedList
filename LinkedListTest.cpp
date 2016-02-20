@@ -17,7 +17,7 @@ const int TEST_LIST_SIZE = 3;
 int main()
 {
 	//create objects for test
-	people teachers[];
+	people teachers[TEST_LIST_SIZE];
 	teachers[0].name = "Bob";
 	teachers[1].name = "Sally";
 	teachers[2].name = "Susan";
@@ -33,8 +33,6 @@ int main()
 	std::list<people>* stlList = new std::list<people>();
 	stlList->push_front(teachers[0]);
 	stlList->pop_front();
-
-
 
 	return EXIT_SUCCESS;
 }

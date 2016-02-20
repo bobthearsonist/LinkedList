@@ -16,26 +16,10 @@
 namespace MTL {
 
 template <typename T>
-class Node : basic_node {
-public:
-	Node<T>(const T&, Node*);
-	Node<T>(const Node&);
-	~Node<T>();
-
-	void set(const T);
-	void set(Node*);
-	T& data(void);
-	Node<T>* next(void);
-
-	const Node<T>* next(void) const;
-	void operator=(const Node&);
-
-private:
+struct Node : protected basic_node {
 	T item;
-	Node<T>* next_node;
 };
 } /* namespace MTL */
-#include "Node.tpp"
 
 namespace MTL{
 template <typename T>
