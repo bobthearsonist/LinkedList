@@ -27,11 +27,7 @@ public:
 	T& data(void);
 	Node<T>* next(void);
 
-	//const T& get(void) const;
 	const Node<T>* next(void) const;
-	//Node<T>* get(void) const;
-
-
 	void operator=(const Node&);
 
 private:
