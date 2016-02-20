@@ -11,10 +11,12 @@
 #include <cstdlib>
 #include <iterator>
 
+#include "basic_node.h"
+
 namespace MTL {
 
 template <typename T>
-class Node {
+class Node : basic_node {
 public:
 	Node<T>(const T&, Node*);
 	Node<T>(const Node&);
@@ -22,41 +24,32 @@ public:
 
 	void set(const T);
 	void set(Node*);
+	T& data(void);
+	Node<T>* next(void);
 
-	T get(void) const;
-	Node* get(void);
-	Node* get(void) const;
+	//const T& get(void) const;
+	//const Node<T>* get(void) const;
+	//Node<T>* get(void) const;
+
 
 	void operator=(const Node&);
 
 private:
 	T item;
-	Node* next;
+	Node<T>* next_node;
 };
-
-template <typename T>
-T Node<T>::get(void) const
-{
-	return this->item;
-}
 } /* namespace MTL */
 #include "Node.tpp"
 
 namespace MTL{
 template <typename T>
-class iterator : public std::iterator<std::forward_iterator_tag, T>
+class iterator : basic_node_iterator
 {
 public:
 	iterator(Node<T>* initial = NULL);
-
 	T& operator*(void) const;
-	bool operator==(const iterator&) const;
-	bool operator!=(const iterator&) const;
-
-	iterator& operator++(void);
-	iterator operator++(int);
 private:
-	T* current;
+	basic_node* current;
 };
 } /* namespace MTL */
 #include "NodeIterator.tpp"

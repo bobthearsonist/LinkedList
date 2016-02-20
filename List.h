@@ -17,7 +17,7 @@ class List {
 public:
 	List<T>();
 	List<T>(Node<T>);
-	List<T>(List<T>);
+	List<T>(const List<T>&);
 	~List();
 
 	Node<T>* head;

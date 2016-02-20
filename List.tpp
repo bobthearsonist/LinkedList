@@ -42,6 +42,4 @@ void List<T>::remove(void)
 	delete temp;
 }
 
-}
-
 } /* namespace MTL */
