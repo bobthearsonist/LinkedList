@@ -28,7 +28,7 @@ public:
 	Node<T>* next(void);
 
 	//const T& get(void) const;
-	//const Node<T>* get(void) const;
+	const Node<T>* next(void) const;
 	//Node<T>* get(void) const;
 
 

@@ -33,25 +33,19 @@ namespace MTL
 		this->next_node = next_node;
 	}
 
+	//this is not a const function because the return value can be used to modify the list
 	template <typename T>
 	Node<T>* Node<T>::next(void)
 	{
 		return this->next_node;
 	}
-/*
+
 	template <typename T>
-	const Node<T>* Node<T>::get(void) const
+	const Node<T>* Node<T>::next(void) const
 	{
-		return this->next;
+		return this->next_node;
 	}
-*/
-/*TODO why wont his compile?
-	template <typename T>
-	Node<T>* Node<T>::get(void) const
-	{
-		return this->next;
-	}
-*/
+
 	template <typename T>
 	T& Node<T>::data(void)
 	{
