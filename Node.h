@@ -33,6 +33,7 @@ class iterator : basic_node_iterator
 public:
 	iterator(Node<T>* initial = NULL);
 	T& operator*(void) const;
+	T& operator++(void);
 private:
 	basic_node* current;
 };

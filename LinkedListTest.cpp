@@ -39,6 +39,11 @@ int main()
 	stlList->push_front(teachers[0]);
 	stlList->pop_front();
 
+	for (int i = 0; i<4;i++)
+	{
+		list->insert(teachers[i]);
+	}
+
 	return EXIT_SUCCESS;
 }
 }//MTL_Test
