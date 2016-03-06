@@ -23,14 +23,14 @@ public:
 	Node<T>* head;
 
 	bool empty(void) const;
-	const T& peek() const;
+	const T& peek(void) const;
+	int size(void) const;
 
 	void insert(T item);
 	void remove(void);
 
 private:
 	unsigned int count;
-
 };
 
 } /* namespace MTL */

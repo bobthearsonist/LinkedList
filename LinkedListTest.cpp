@@ -1,6 +1,7 @@
 #include "List.h"
 #include <string>
 #include <list>
+#include <cassert>
 
 using namespace MTL;
 
@@ -24,10 +25,14 @@ int main()
 
 	//create MTL list of objects
 	List<people>* list = new List<people>();
-	for (int i = 0; i<4;i++)
+	for (int i = 0; i<TEST_LIST_SIZE;i++)
 	{
 		list->insert(teachers[i]);
 	}
+	//test for correct size
+	assert(list->size() == TEST_LIST_SIZE);
+	//
+	assert( list->head->item.name.compare(teachers[0].name) == 0 );
 
 	//create STL list of objects
 	std::list<people>* stlList = new std::list<people>();

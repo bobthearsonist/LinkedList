@@ -16,8 +16,13 @@
 namespace MTL {
 
 template <typename T>
-struct Node : protected basic_node {
+struct Node : public basic_node {
 	T item;
+	Node(T item, Node<T>* next)
+	{
+		this->item = item;
+		this->next = next;
+	}
 };
 } /* namespace MTL */
 

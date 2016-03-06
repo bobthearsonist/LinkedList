@@ -34,6 +34,12 @@ void List<T>::insert(T item)
 }
 
 template <typename T>
+int List<T>::size(void) const
+{
+	return this->count;
+}
+
+template <typename T>
 void List<T>::remove(void)
 {
 	assert(!empty());
