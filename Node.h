@@ -23,19 +23,16 @@ struct Node : public basic_node {
 		this->item = item;
 		this->next = next;
 	}
-};
-} /* namespace MTL */
 
-namespace MTL{
-template <typename T>
-class iterator : basic_node_iterator
-{
-public:
-	iterator(Node<T>* initial = NULL);
-	T& operator*(void) const;
-	T& operator++(void);
-private:
-	basic_node* current;
+	class iterator : public basic_node_iterator
+	{
+	public:
+		iterator(Node<T>* initial = NULL);
+		T& operator*(void) const;
+		T& operator++(void);
+	private:
+		basic_node* current;
+	};
 };
 } /* namespace MTL */
 #include "NodeIterator.tpp"

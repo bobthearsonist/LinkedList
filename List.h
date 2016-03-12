@@ -29,8 +29,16 @@ public:
 	void insert(T item);
 	void remove(void);
 
+	class iterator : public Node<T>::iterator {
+		iterator(Node<T>* = NULL) : Node<T>::iterator(Node<T>*) {}
+	};
+
+	iterator begin() { return iterator(head); }
+	iterator end() { return iterator(NULL); }
+
 private:
 	unsigned int count;
+
 };
 
 } /* namespace MTL */

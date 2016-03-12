@@ -1,19 +1,20 @@
+#include "Node.h"
 namespace MTL{
 
-template <typename T>
-iterator<T>::iterator(Node<T>* node)
+template<typename T>
+Node<T>::iterator::iterator(Node<T>* initial)
 {
-	current = node;
+	current = initial;
 }
 
 template <typename T>
-T& iterator<T>::operator*(void) const
+T& Node<T>::iterator::operator*(void) const
 {
 	return static_cast<Node<T>*>(current)->item;
 }
 
 template <typename T>
-T& iterator<T>::operator++(void)
+T& Node<T>::iterator::operator++(void)
 {
 	return current->next;
 }
