@@ -18,7 +18,13 @@ template <typename T>
 struct Node : public basic_node {
 public:
 	T item;
-	Node(T item, Node<T>* next)
+	//TODO fancy constructor chaining
+	Node(T& item, Node<T>* next)
+	{
+		this->item = item;
+		this->next = next;
+	}
+	Node(T& item, basic_node* next)
 	{
 		this->item = item;
 		this->next = next;
@@ -29,6 +35,8 @@ public:
 	public:
 		iterator(Node<T>* initial = NULL): basic_node_iterator(initial){}
 		T& operator*(void) const;
+		//TODO this deafeats our data hiding! pull into list.h if we need this
+		Node<T>* getNode() { return static_cast<Node<T>*>(current); }
 	};
 };
 } /* namespace MTL */

@@ -8,6 +8,8 @@
 #ifndef BASIC_NODE_H_
 #define BASIC_NODE_H_
 
+#include <cstddef>
+
 namespace MTL {
 
 struct basic_node {
@@ -49,6 +51,7 @@ class basic_node_iterator
 		{
 			return this->current == comparand.current;
 		}
+
 	protected:
 		basic_node* current;
 };

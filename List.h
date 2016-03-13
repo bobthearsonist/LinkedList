@@ -26,13 +26,14 @@ public:
 	const T& peek(void) const;
 	int size(void) const;
 
-	void insert(T item);
-	void remove(void);
 
 	class iterator : public Node<T>::iterator {
 	public:
 		iterator(Node<T>* initial = NULL) : Node<T>::iterator(initial) {}
 	};
+
+	/*iterator*/void insert(iterator where, /*TODO const*/ T& item);
+	void remove(void);
 
 	iterator begin() { return iterator(head); }
 	iterator end() { return iterator(NULL); }
