@@ -14,9 +14,9 @@
 #include "basic_node.h"
 
 namespace MTL {
-
 template <typename T>
 struct Node : public basic_node {
+public:
 	T item;
 	Node(T item, Node<T>* next)
 	{
@@ -27,11 +27,8 @@ struct Node : public basic_node {
 	class iterator : public basic_node_iterator
 	{
 	public:
-		iterator(Node<T>* initial = NULL);
+		iterator(Node<T>* initial = NULL): basic_node_iterator(initial){}
 		T& operator*(void) const;
-		T& operator++(void);
-	private:
-		basic_node* current;
 	};
 };
 } /* namespace MTL */

@@ -30,7 +30,8 @@ public:
 	void remove(void);
 
 	class iterator : public Node<T>::iterator {
-		iterator(Node<T>* = NULL) : Node<T>::iterator(Node<T>*) {}
+	public:
+		iterator(Node<T>* initial = NULL) : Node<T>::iterator(initial) {}
 	};
 
 	iterator begin() { return iterator(head); }

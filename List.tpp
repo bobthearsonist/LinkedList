@@ -47,5 +47,4 @@ void List<T>::remove(void)
 	head = head->next;
 	delete temp;
 }
-
 } /* namespace MTL */

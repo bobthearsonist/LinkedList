@@ -49,7 +49,7 @@ class basic_node_iterator
 		{
 			return this->current == comparand.current;
 		}
-	private:
+	protected:
 		basic_node* current;
 };
 
