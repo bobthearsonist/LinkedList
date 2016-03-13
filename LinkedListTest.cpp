@@ -43,7 +43,7 @@ void main(void)
 	{
 		list->insert(list->begin(),teachers[i]);
 	}
-	//test for correct size
+	//test size and for correct size after insert
 	assert(list->size() == TEST_LIST_SIZE);
 	//test that the head was set properly
 	assert(list->head->item.name.compare(teachers[TEST_LIST_SIZE-1].name) == 0);
@@ -82,6 +82,44 @@ void main(void)
 	++mtlListIterator;
 	assert((*mtlListIterator).name == "Jim");
 
+	//test clear and empty
+	list->clear();
+	assert(list->empty());
+
+	//test push_front
+	for (int i = 0; i<TEST_LIST_SIZE; i++)
+	{
+		list->push_front(teachers[i]);
+	}
+	index = TEST_LIST_SIZE - 1;
+	for (mtlListIterator= list->begin(); mtlListIterator!= list->end(); ++mtlListIterator, --index)
+	{
+		//this was expanded out to aid in debugging
+		people currentPerson = (*mtlListIterator);
+		people originalPerson = teachers[index];
+		assert(currentPerson.name.compare(originalPerson.name) == 0);
+	}
+
+	//test pop_front and front and empty
+	index = TEST_LIST_SIZE - 1;
+	while(!list->empty())
+	{
+		people currentPerson = list->front();
+		people originalPerson = teachers[index--];
+		assert(currentPerson.name.compare(originalPerson.name) == 0);
+		list->pop_front();
+	}
+
+	//TODO test our underflow exception
+	try
+	{
+		//list->pop_front();
+	}
+	catch(std::exception exception)
+	{
+		
+	}
+	
 	/*
 	This section was coded up as a control to compare my implementations against. It could be removed when done,
 	but I left it here to show what I was doing.

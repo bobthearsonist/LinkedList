@@ -20,8 +20,9 @@ bool List<T>::empty(void) const
 	return head == NULL;
 }
 
+//this is a reference to the copy of the item emplaced
 template <typename T>
-const T& List<T>::peek(void) const
+T& List<T>::front(void)
 {
 	return head->item;
 }
@@ -61,11 +62,32 @@ int List<T>::size(void) const
 }
 
 template <typename T>
-void List<T>::remove(void)
+void List<T>::pop_front(void)
 {
-	assert(!empty());
+	//the stl causes undefined behavior, however vs++ throws here and I thought that was nice
+	if(count == 0)
+	{
+		throw new std::exception("underflow exception");
+	}
+	
+	//handle deleting the item
+	//assignments must be done as a Node to properly delete item
 	Node<T>* temp = head;
-	head = head->next;
+	head = static_cast<Node<T>*>(head->next);
 	delete temp;
+	
+	//if it was all done properly decrement the count
+	--count;
 }
+
+template <typename T>
+void List<T>::clear(void)
+{
+	//valid for empty list so no checking is done
+	while(count)
+	{
+		pop_front();
+	}
+}
+
 } /* namespace MTL */
