@@ -15,32 +15,58 @@ List<T>::List()
 }
 
 template <typename T>
+List<T>::List(const List<T>& target)
+{
+	//TODO implement a range insert
+	for (iterator i = target.begin(); i != target.end();++i)
+	{
+		push_front(*i);
+	}
+}
+
+template <typename T>
+List<T>::~List()
+{
+	clear();
+}
+
+template <typename T>
 bool List<T>::empty(void) const
 {
-	return head == NULL;
+	return count == 0;
+}
+
+template <typename T>
+void List<T>::check_underflow(void)
+{
+	if (empty())
+	{
+		throw new std::exception("underflow");
+	}
 }
 
 //this is a reference to the copy of the item emplaced
 template <typename T>
 T& List<T>::front(void)
 {
+	check_underflow();
 	return head->item;
 }
 
 //my insert has an insert of O(N), on top of the O(N) of setting the input iterator
 //to the desired location, from iterating to find --iterator, making insert an O(N^2) operation.
 template <typename T>
-/*iterator*/ void List<T>::insert(iterator where, /*TODO const*/T& item)
+/*iterator*/ void List<T>::insert(iterator where, const T& item)
 {
 	//todo check that interator is within container!
 	
 	//we need the node prior to the current location
-	iterator prev = head;
-	for (iterator i = head; i != where;++i)
+	iterator prev = begin();
+	for (iterator i = begin(); i != where;++i)
 	{
 		prev = i;
 	}
-	if(prev == this->begin())
+	if (prev == this->begin())
 	{
 		head = new Node<T>(item, head);
 	}
@@ -64,11 +90,7 @@ int List<T>::size(void) const
 template <typename T>
 void List<T>::pop_front(void)
 {
-	//the stl causes undefined behavior, however vs++ throws here and I thought that was nice
-	if(count == 0)
-	{
-		throw new std::exception("underflow exception");
-	}
+	check_underflow();
 	
 	//handle deleting the item
 	//assignments must be done as a Node to properly delete item

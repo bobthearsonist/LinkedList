@@ -29,6 +29,11 @@ public:
 		this->item = item;
 		this->next = next;
 	}
+	Node(const T& item, Node<T>* next)
+	{
+		this->item = item;
+		this->next = next;
+	}
 
 	class iterator : public basic_node_iterator
 	{

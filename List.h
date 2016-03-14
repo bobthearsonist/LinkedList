@@ -37,10 +37,13 @@ public:
 	public:
 		iterator(Node<T>* initial = NULL) : Node<T>::iterator(initial) {}
 	};
-	/*TODO iterator*/void insert(iterator where, /*TODO const*/ T& item);
+	/*TODO iterator*/void insert(iterator where, const T& item);
+	//TODO implement const iterator
 
 	iterator begin() { return iterator(head); }
 	iterator end() { return iterator(NULL); }
+
+	void check_underflow(void);
 
 private:
 	//unsigned means it can never be negative so we dont have to check
