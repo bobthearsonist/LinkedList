@@ -30,7 +30,10 @@ List<T>::List(const List<T>& target)
 template <typename T>
 List<T>::~List()
 {
+	//clear the list
 	clear();
+	//now free the head
+	delete head;
 }
 
 template <typename T>
@@ -95,12 +98,10 @@ void List<T>::pop_front(void)
 	
 	//handle deleting the item
 	//assignments must be done as a Node to properly delete item
-	Node<T>* temp = static_cast<Node<T>*>(head->next);
+	//TODO see if you can do this without the overhead of the iterator by using head directly
+	Node<T>* temp = static_cast<Node<T>*>(begin().current);
 
-	T next = static_cast<Node<T>*>(head->next)->item;
-	T nextnext = static_cast<Node<T>*>(head->next->next)->item;
-
-	head = static_cast<Node<T>*>(head->next->next);
+	head->next = this->next_node(temp);
 	delete temp;
 	
 	//if it was all done properly decrement the count
@@ -116,7 +117,6 @@ void List<T>::clear(void)
 	{
 		pop_front();
 	}
-	delete head;
 }
 
 } /* namespace MTL */

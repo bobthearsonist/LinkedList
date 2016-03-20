@@ -62,7 +62,7 @@ public:
 	void clear(void);
 
 	//item operations
-	void push_front(/*TODO const*/ T& item) { insert(head, item); };
+	void push_front(/*TODO const*/ T& item) { insert(begin(), item); };
 	void pop_front(void);
 	T& front(void);
 
