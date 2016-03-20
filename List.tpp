@@ -56,23 +56,23 @@ T& List<T>::front(void)
 	return *begin();
 }
 
-//my insert has an insert of O(N), on top of the O(N) of setting the input iterator
-//to the desired location, from iterating to find --iterator, making insert an O(N^2) operation.
+//insert of O(N) because I am not doubly linked and must find prev
 template <typename T>
 /*iterator*/ void List<T>::insert(iterator where, T& item)
 {
 	//todo check that interator is within container!
 	
-	Node<T>* p_node = static_cast<Node<T>*>(where.current);
+	Node<T>* where_node = static_cast<Node<T>*>(where.current);
 
-	//we need the node prior to the current location
-	iterator prev = begin();
-	for (iterator i = prev; i != where;++i)
+	//we need the node prior to the current location, and must start at the belt buckle to insert at head
+	iterator prev = end();
+	for (iterator i = begin(); i != where;++i,++prev)
 	{
-		prev = i;
+		T item = *i;
 	}
 	
-	Node<T>* new_node = new Node<T>(item, this->next_node(p_node));
+	Node<T>* new_node = new Node<T>(item, where_node);
+	Node<T>* prev_node = static_cast<Node<T>*>(prev.current);
 
 	this->next_node(static_cast<Node<T>*>(prev.current)) = new_node;
 	
@@ -96,6 +96,10 @@ void List<T>::pop_front(void)
 	//handle deleting the item
 	//assignments must be done as a Node to properly delete item
 	Node<T>* temp = static_cast<Node<T>*>(head->next);
+
+	T next = static_cast<Node<T>*>(head->next)->item;
+	T nextnext = static_cast<Node<T>*>(head->next->next)->item;
+
 	head = static_cast<Node<T>*>(head->next->next);
 	delete temp;
 	
@@ -107,10 +111,12 @@ template <typename T>
 void List<T>::clear(void)
 {
 	//valid for empty list so no checking is done
-	while(count)
+	
+	while(!empty())
 	{
 		pop_front();
 	}
+	delete head;
 }
 
 } /* namespace MTL */
