@@ -33,6 +33,90 @@ void main(void)
 	List<people>::iterator mtlListIterator;
 	int index;
 
+	/**************************************************************************************************************
+	This section was coded up as a control to compare my implementations against. It could be removed when done,
+	but I left it here to show what I was doing.
+	***************************************************************************************************************/
+
+	std::list<people>::iterator stlListIterator;
+	//create STL list of objects
+	std::list<people>* stlList = new std::list<people>();
+
+	for (int i = 0; i<TEST_LIST_SIZE; i++)
+	{
+		stlList->insert(stlList->begin(), teachers[i]);
+	}
+	//YOU CANT GET THE HEAD THIS WAY!
+	//person head_person = stlList->head->item;
+	people head_person = stlList->front();
+
+	//note that we declare an iterator from the container class.
+	//we do not innitialize the list form the iterator class like this
+	//for (stlListIterator.begin(); stlListIterator.end(); mtlListIterator++)
+	//we use the container class to initialize it, menaing it is not defined in the iterator but in the container
+	index = TEST_LIST_SIZE - 1;
+	for (stlListIterator = stlList->begin(); stlListIterator != stlList->end(); ++stlListIterator, --index)
+	{
+		//this was expanded out to aid in debugging
+		people currentPerson = (*stlListIterator);
+		people originalPerson = teachers[index];
+		assert(currentPerson.name.compare(originalPerson.name) == 0);
+	}
+
+	//insert into the middle of the list
+	stlListIterator = stlList->begin();
+	while (stlListIterator->name != "Jim")
+	{
+		people currentPerson = *stlListIterator;
+		++stlListIterator;
+	}
+	person = people("Leeroy");
+	stlList->insert(stlListIterator, person);
+	index = 0;
+	for (stlListIterator = stlList->begin(); stlListIterator->name != "Leeroy" && stlListIterator != stlList->end(); ++stlListIterator, ++index)
+	{
+		people currentPerson = *stlListIterator;
+	}
+	stlList->clear();
+
+	//now lets look at push_front and push_back and see which is the same as insert(head,item)
+	for (int i = 0; i<TEST_LIST_SIZE; i++)
+	{
+		stlList->push_front(teachers[i]);
+	}
+	index = TEST_LIST_SIZE - 1;
+	for (stlListIterator = stlList->begin(); stlListIterator != stlList->end(); ++stlListIterator, --index)
+	{
+		//this was expanded out to aid in debugging
+		people currentPerson = (*stlListIterator);
+		people originalPerson = teachers[index];
+	}
+	stlList->clear();
+	for (int i = 0; i<TEST_LIST_SIZE; i++)
+	{
+		stlList->push_back(teachers[i]);
+	}
+	index = 0;
+	for (stlListIterator = stlList->begin(); stlListIterator != stlList->end(); ++stlListIterator, ++index)
+	{
+		//this was expanded out to aid in debugging
+		people currentPerson = (*stlListIterator);
+		people originalPerson = teachers[index];
+	}
+	stlList->clear();
+	//this has shown that push_fornt inserts at head and push_back inserts at the tail
+
+	//now lets look at the stl remove and pop
+	stlList->push_front(teachers[0]);
+	stlList->pop_front();
+	stlList->push_front(teachers[0]);
+	//TODO you need an == defined for people before you can use remove.
+	//stlList->remove(teachers[0]);
+
+	/**************************************************************************************************************
+	This section tests the MTL List class. Its behavior is meant to mdel that of the STL as closely as possible
+	***************************************************************************************************************/
+
 	//constructor tests
 	//TODO implement a copy contructor for an array
 	//List<people> staticlist(teachers[0],teachers[0] + (TEST_LIST_SIZE-1))
@@ -45,8 +129,11 @@ void main(void)
 	}
 	//test size and for correct size after insert
 	assert(list->size() == TEST_LIST_SIZE);
+	//The stl does not allow this, which is why you were having problems. head is always an empty item
 	//test that the head was set properly
-	assert(list->head->item.name.compare(teachers[TEST_LIST_SIZE-1].name) == 0);
+	//assert(list->head->item.name.compare(teachers[TEST_LIST_SIZE-1].name) == 0);
+	//test instead that we have the right person at the front
+	assert(list->front().name.compare(teachers[TEST_LIST_SIZE-1].name) == 0);
 
 	//test that the values were set appropriately
 	//tests the iterator operator++(), operator*, and the operator++() of the inherited classes
@@ -120,79 +207,7 @@ void main(void)
 		
 	}
 	
-	/*
-	This section was coded up as a control to compare my implementations against. It could be removed when done,
-	but I left it here to show what I was doing.
-	*/
-	std::list<people>::iterator stlListIterator;
-	//create STL list of objects
-	std::list<people>* stlList = new std::list<people>();
 
-	for (int i = 0; i<TEST_LIST_SIZE; i++)
-	{
-		stlList->insert(stlList->begin(),teachers[i]);
-	}
-	//note that we declare an iterator from the container class.
-	//we do not innitialize the list form the iterator class like this
-	//for (stlListIterator.begin(); stlListIterator.end(); mtlListIterator++)
-	//we use the container class to initialize it, menaing it is not defined in the iterator but in the container
-	index = TEST_LIST_SIZE-1;
-	for (stlListIterator = stlList->begin(); stlListIterator != stlList->end(); ++stlListIterator,--index)
-	{
-		//this was expanded out to aid in debugging
-		people currentPerson = (*stlListIterator);
-		people originalPerson = teachers[index];
-		assert(currentPerson.name.compare(originalPerson.name) == 0);
-	}
-
-	//insert into the middle of the list
-	stlListIterator = stlList->begin();
-	while (stlListIterator->name != "Jim")
-	{
-		people currentPerson = *stlListIterator;
-		++stlListIterator;
-	}
-	person = people("Leeroy");
-	stlList->insert(stlListIterator, person);
-	index = 0;
-	for (stlListIterator = stlList->begin(); stlListIterator->name != "Leeroy" && stlListIterator != stlList->end(); ++stlListIterator, ++index)
-	{
-		people currentPerson = *stlListIterator;
-	}
-	stlList->clear();
-	
-	//now lets look at push_front and push_back and see which is the same as insert(head,item)
-	for (int i = 0; i<TEST_LIST_SIZE; i++)
-	{
-		stlList->push_front(teachers[i]);
-	}
-	index = TEST_LIST_SIZE - 1;
-	for (stlListIterator = stlList->begin(); stlListIterator != stlList->end(); ++stlListIterator, --index)
-	{
-		//this was expanded out to aid in debugging
-		people currentPerson = (*stlListIterator);
-		people originalPerson = teachers[index];
-	}
-	stlList->clear();
-	for (int i = 0; i<TEST_LIST_SIZE; i++)
-	{
-		stlList->push_back(teachers[i]);
-	}
-	index = 0;
-	for (stlListIterator = stlList->begin(); stlListIterator != stlList->end(); ++stlListIterator, ++index)
-	{
-		//this was expanded out to aid in debugging
-		people currentPerson = (*stlListIterator);
-		people originalPerson = teachers[index];
-	}
-	stlList->clear();
-	//this has shown that push_fornt inserts at head and push_back inserts at the tail
-	
-	//now lets look at the stl remove and pop
-	stlList->push_front(teachers[0]);
-	stlList->pop_front();
-	stlList->push_front(teachers[0]);
-	//stlList->remove(teachers[0]);
 }
 
 

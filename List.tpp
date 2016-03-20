@@ -4,14 +4,17 @@
  *  Created on: Feb 18, 2016
  *      Author: Martin
  */
-#include <cassert>
+#include <exception>
 namespace MTL {
 
 template <typename T>
 List<T>::List()
 {
 	count = 0;
-	head = NULL;
+	//TODO make all empy nodes point to themselves
+	Node<T>* new_head = new Node<T>();
+	new_head->next = new_head;
+	head = new_head;
 }
 
 template <typename T>
@@ -37,7 +40,7 @@ bool List<T>::empty(void) const
 }
 
 template <typename T>
-void List<T>::check_underflow(void)
+void List<T>::check_underflow(void) const
 {
 	if (empty())
 	{
@@ -50,37 +53,35 @@ template <typename T>
 T& List<T>::front(void)
 {
 	check_underflow();
-	return head->item;
+	return *begin();
 }
 
 //my insert has an insert of O(N), on top of the O(N) of setting the input iterator
 //to the desired location, from iterating to find --iterator, making insert an O(N^2) operation.
 template <typename T>
-/*iterator*/ void List<T>::insert(iterator where, const T& item)
+/*iterator*/ void List<T>::insert(iterator where, T& item)
 {
 	//todo check that interator is within container!
 	
+	Node<T>* p_node = static_cast<Node<T>*>(where.current);
+
 	//we need the node prior to the current location
 	iterator prev = begin();
-	for (iterator i = begin(); i != where;++i)
+	for (iterator i = prev; i != where;++i)
 	{
 		prev = i;
 	}
-	if (prev == this->begin())
-	{
-		head = new Node<T>(item, head);
-	}
-	else
-	{
-		basic_node* pNext = prev.getNode()->next;
-		prev.getNode()->next = new Node<T>(item, where.getNode());
-	}
+	
+	Node<T>* new_node = new Node<T>(item, this->next_node(p_node));
+
+	this->next_node(static_cast<Node<T>*>(prev.current)) = new_node;
 	
 	count++;
 	
 	//return prev;
 }
 
+//Does not include belt buckle node
 template <typename T>
 int List<T>::size(void) const
 {
@@ -94,8 +95,8 @@ void List<T>::pop_front(void)
 	
 	//handle deleting the item
 	//assignments must be done as a Node to properly delete item
-	Node<T>* temp = head;
-	head = static_cast<Node<T>*>(head->next);
+	Node<T>* temp = static_cast<Node<T>*>(head->next);
+	head = static_cast<Node<T>*>(head->next->next);
 	delete temp;
 	
 	//if it was all done properly decrement the count

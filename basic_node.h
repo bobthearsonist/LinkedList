@@ -19,7 +19,7 @@ struct basic_node {
 class basic_node_iterator
 {
 	public:
-		basic_node_iterator(basic_node* current=NULL)
+		basic_node_iterator(basic_node* current)
 		{
 				this->current = current;
 		}
@@ -52,7 +52,8 @@ class basic_node_iterator
 			return this->current == comparand.current;
 		}
 
-	protected:
+	/*TODO how to make protected? stl is not!*/
+	//protected:
 		basic_node* current;
 };
 
