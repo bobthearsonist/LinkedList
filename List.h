@@ -25,6 +25,7 @@ class List {
 		//TODO fancy constructor chaining
 		Node() : item() { this->next = NULL; }
 		Node(Node<T>* next) : Node() { this->next = next; }
+		Node(const Node<T>* next) : Node() { this->next = next; }
 		Node(T& item, Node<T>* next )
 		{
 			this->item = item;
@@ -35,11 +36,19 @@ class List {
 			this->item = item;
 			this->next = next;
 		}
+		//TODO get rid of this conversion constructor
 		Node(T& item, basic_node* next)
 		{
 			this->item = item;
 			this->next = next;
 		}
+		Node(T& item, const basic_node* next)
+		{
+			this->item = item;
+			this->next = next;
+		}
+
+
 		//this allows the creation of a new node using the position of an iterator without defeating data hiding
 		Node(T& item, typename List<T>::iterator it) : Node(item)
 		{
@@ -62,7 +71,10 @@ public:
 	void clear(void);
 
 	//item operations
-	void push_front(/*TODO const*/ T& item) { insert(begin(), item); };
+	void push_front(const T& item)
+	{
+		insert(begin(), item);
+	};
 	void pop_front(void);
 	T& front(void);
 
@@ -74,7 +86,7 @@ public:
 		return (Node<T>*&)node->next;
 	}
 
-	//list iterator class
+	//list iterator classes
 	class iterator : public basic_node_iterator {
 	public:
 		iterator(Node<T>* initial = NULL) : basic_node_iterator(initial) {}
@@ -91,12 +103,26 @@ public:
 			return static_cast<Node<T>*>(current);
 		}
 	};
+	class const_iterator : public const_basic_node_iterator
+	{
+		const_iterator(const Node<T>* initial = NULL) : const_basic_node_iterator(initial) {}
+		const T& operator*(void) const
+		{
+			const Node<T>* p_node = static_cast<const Node<T>*>(current);
+			return p_node->item;
+		}
+		const T* operator->(void) const
+		{
+			return (**this);
+		}
+	};
 	//iterator operations
-	/*TODO iterator*/void insert(iterator where, T& item);
-	//TODO implement const iterator
+	/*TODO iterator*/void insert(iterator where, const T& item);
 
-	iterator begin() { return iterator(this->next_node(head)); }
-	iterator end() { return iterator(head); }
+	iterator begin() const { return iterator(this->next_node(head)); }
+	iterator end() const { return iterator(head); }
+	const_iterator cbegin() const { return const_iterator(head->next); }
+	const_iterator cend() const { return const_iterator(head); }
 
 	void check_underflow(void) const;
 

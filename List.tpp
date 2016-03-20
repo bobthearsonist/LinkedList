@@ -61,7 +61,7 @@ T& List<T>::front(void)
 
 //insert of O(N) because I am not doubly linked and must find prev
 template <typename T>
-/*iterator*/ void List<T>::insert(iterator where, T& item)
+/*iterator*/ void List<T>::insert(iterator where, const T& item)
 {
 	//todo check that interator is within container!
 	
@@ -69,7 +69,7 @@ template <typename T>
 
 	//we need the node prior to the current location, and must start at the belt buckle to insert at head
 	iterator prev = end();
-	for (iterator i = begin(); i != where;++i,++prev)
+	for (iterator i = begin(); i != end() && i != where;++i,++prev)
 	{
 		T item = *i;
 	}
